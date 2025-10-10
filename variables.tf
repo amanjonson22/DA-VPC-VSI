@@ -112,17 +112,28 @@ variable "flow_logs_active" {
   default     = true
 }
 
+variable "create_policy" {
+  description = "Defines if the policy should be created or not. Should be true on the first appliance of this specific DA. Default is false."
+  type        = bool
+  default     = false
+}
+
 ##### SSH Keys #####
 
 variable "ssh_keys" {
   description = "SSH keys to use to provision a VSI. If `public_key` is not provided, the named key will be looked up from data. See https://cloud.ibm.com/docs/vpc?topic=vpc-ssh-keys."
   type = object({
-      name              = string
-      public_key        = optional(string)
-      resource_group_id = optional(string)
-    })
+    name              = string
+    public_key        = optional(string)
+    resource_group_id = optional(string)
+  })
 }
 
+variable "create_ssh_key" {
+  description = "Set as true to create a new ssh key with the provided public key, or set as false to use an existing ssh key. The default is true."
+  type        = bool
+  default     = true
+}
 
 #### Variáveis da VSI ######
 

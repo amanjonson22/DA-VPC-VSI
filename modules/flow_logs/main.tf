@@ -13,8 +13,8 @@ module "cos" {
 }
 
 resource "ibm_iam_authorization_policy" "flow_logs_authorization" {
-  # depends_on           = [module.cos]
-  count = var.create_policy == true ? 1 : 0
+  depends_on           = [module.cos]
+  count                = var.create_policy == true ? 1 : 0
   source_service_name  = "is"
   source_resource_type = "flow-log-collector"
   target_service_name  = "cloud-object-storage"

@@ -27,8 +27,8 @@ variable "cos_bucket_name" {
 
 variable "create_policy" {
   description = "Defines if the policy is to be created on the IBM Cloud environment or not"
-  type = bool
-  default = true
+  type        = bool
+  default     = false
 }
 
 #### Variáveis Flow Logs ####
