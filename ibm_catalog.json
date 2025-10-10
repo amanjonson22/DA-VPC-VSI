@@ -1,0 +1,63 @@
+{
+    "products": [
+        {
+            "name" : "DA-teste",
+            "label": "Cloud Object Storage",
+            "version": "1.0.0",
+            "product-kind": "solution",
+            "tags": ["Virtual Private Cloud", "Virtual Server Instance", "VPC", "VSI", "Flow Logs"],
+            "keywords": ["vpc", "vsi", "flow-logs", "virtual-private-cloud", "virtual-server-instance"],
+            "short-description": "Provisiona uma VPC com uma única VSI em uma subnet especificada.",
+            "long-description": "Este módulo Terraform provisiona uma VPC com subnet especificada e address prefix especificado, cria uma instância de Flow Logs e o conecta à VPC para coleta de logs. Instancia uma VSI dentro da VPC criada com uma VNI dentro da subnet criada, utilizando a chave ssh especificada, esta tendo sido criada neste módulo ou não.",
+            "provider-name": "IBM",
+            "features" : [ {
+                "description": "Provisiona uma VPC com uma VSI, tendo Flow Logs para coleta dos logs.\n",
+                "title": "Provisionamento de VPC com VSI e Flow Logs"
+                }
+            ],
+            "flavors": [ {
+                "label": "QuickStart",
+                "name": "quickstart",
+                "configuration" : [
+                    {
+                        "key": "region",
+                        "type": "string",
+                        "default_value" : "br-sao",
+                        "description": "A região onde as instâncias serão provisionadas",
+                        "required": true,
+                        "options": ["br-sao"],
+                        "hidden": false
+                    },
+                    {
+                        "key": "zone",
+                        "type": "string",
+                        "default_value" : "br-sao-1",
+                        "description": "A região onde as subnets e address prefix serão provisionadas",
+                        "required": true,
+                        "options": ["br-sao-1", "br-sao-2", "br-sao-3"],
+                        "hidden": false
+                    },
+                    {
+                        "key": "address-prefix-value",
+                        "type": "string",
+                        "default_value" : "10.250.0.0/18",
+                        "description": "O valor do address prefix da VPC. Deve ter um CIDR maior que o da subnet",
+                        "required": true,
+                        "options": ["10.250.0.0/18", "10.250.64.0/18", "10.250.128.0/18"],
+                        "hidden": false
+                    },
+                    {
+                        "key": "subnet-value",
+                        "type": "string",
+                        "default_value" : "10.250.0.0/24",
+                        "description": "O valor da subnet da VPC.",
+                        "required": true,
+                        "options": ["10.250.0.0/24", "10.250.64.0/24", "10.250.128.0/24"],
+                        "hidden": false
+                    }
+
+                ]
+            } ]
+        }
+    ]
+}

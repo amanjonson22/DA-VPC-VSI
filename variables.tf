@@ -59,16 +59,6 @@ variable "address_prefixes" {
       name     = "address-1"
       ip_range = "10.250.0.0/18"
       location = "br-sao-1"
-    },
-    {
-      name     = "address-2"
-      ip_range = "10.250.64.0/18"
-      location = "br-sao-2"
-    },
-    {
-      name     = "address-3"
-      ip_range = "10.250.128.0/18"
-      location = "br-sao-3"
     }
   ]
 }
@@ -85,16 +75,6 @@ variable "subnet" {
     name            = "subnet-1"
     location        = "br-sao-1"
     ipv4_cidr_block = "10.250.0.0/24"
-    },
-    {
-      name            = "subnet-2"
-      location        = "br-sao-2"
-      ipv4_cidr_block = "10.250.64.0/24"
-    },
-    {
-      name            = "subnet-3"
-      location        = "br-sao-3"
-      ipv4_cidr_block = "10.250.128.0/24"
     }
   ]
 }
