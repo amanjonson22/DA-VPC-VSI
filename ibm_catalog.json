@@ -2,7 +2,7 @@
     "products": [
         {
             "name" : "DA-teste",
-            "label": "Cloud Object Storage",
+            "label": "VPC com VSI e Flow Logs",
             "version": "1.0.0",
             "product-kind": "solution",
             "tags": ["Virtual Private Cloud", "Virtual Server Instance", "VPC", "VSI", "Flow Logs"],
