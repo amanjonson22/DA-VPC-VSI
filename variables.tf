@@ -26,15 +26,15 @@ variable "region" {
   default     = "br-sao"
 }
 
-# variable "cos_instance_name" {
-#   description = "Name of the COS instance for the Flow Logs"
-#   type = string
-# }
+variable "cos_instance_name" {
+  description = "Name of the COS instance for the Flow Logs"
+  type        = string
+}
 
-# variable "cos_bucket_name" {
-#   description = "Bucket name for the Flow Logs"
-#   type = string
-# }
+variable "cos_bucket_name" {
+  description = "Bucket name for the Flow Logs"
+  type        = string
+}
 
 ###### Variáveis da VPC #######
 
@@ -70,7 +70,7 @@ variable "address_prefixes" {
       ip_range = "10.250.128.0/18"
       location = "br-sao-3"
     }
- ]
+  ]
 }
 
 
@@ -101,44 +101,49 @@ variable "subnet" {
 
 #### VPC Flow Logs ######
 
-# variable "enable_vpc_flow_logs" {
-#   description = "Flag to enable vpc flow logs. If true, flow log collector will be created"
-#   type        = bool
-#   default     = true
+variable "flow_logs_name" {
+  description = "Name for the Flow Logs"
+  type        = string
+}
 
-#   validation {
-#     condition = (
-#       !var.enable_vpc_flow_logs ||
-#       (
-#         var.create_authorization_policy_vpc_to_cos
-#         ? (var.existing_cos_instance_guid != null && var.existing_storage_bucket_name != null)
-#         : (var.existing_storage_bucket_name != null)
-#       )
-#     )
-#     error_message = "To enable VPC Flow Logs, provide COS Bucket name. If you're creating an authorization policy then also provide COS instance GUID."
-#   }
-# }
+variable "flow_logs_active" {
+  description = "If the Flow Logs will be active when creating it or not"
+  type        = bool
+  default     = true
+}
 
-# variable "create_authorization_policy_vpc_to_cos" {
-#   description = "Create authorisation policy for VPC to access COS. Set as false if authorization policy exists already"
-#   type        = bool
-#   default     = true
-# }
+##### SSH Keys #####
 
-# variable "existing_cos_instance_guid" {
-#   description = "GUID of the COS instance to create Flow log collector"
-#   type        = string
-#   default     = null
-# }
+variable "ssh_keys" {
+  description = "SSH keys to use to provision a VSI. If `public_key` is not provided, the named key will be looked up from data. See https://cloud.ibm.com/docs/vpc?topic=vpc-ssh-keys."
+  type = object({
+      name              = string
+      public_key        = optional(string)
+      resource_group_id = optional(string)
+    })
+}
 
-# variable "existing_storage_bucket_name" {
-#   description = "Name of the COS bucket to collect VPC flow logs"
-#   type        = string
-#   default     = null
-# }
 
-# variable "is_flow_log_collector_active" {
-#   description = "Indicates whether the collector is active. If false, this collector is created in inactive mode."
-#   type        = bool
-#   default     = true
-# }
+#### Variáveis da VSI ######
+
+variable "vni_name" {
+  description = "Name for the Virtual Network Interface"
+  type        = string
+}
+
+variable "vsi_name" {
+  description = "The name for the VSI"
+  type        = string
+}
+
+variable "vsi_profile" {
+  description = "The profile of the machine type of the VSI. The default is bx2-2x8"
+  type        = string
+  default     = "bx2-2x8"
+}
+
+variable "vsi_image_name" {
+  description = "The name of the image to be used on the VSI. The default is CentOS Stream 10 AMD 64"
+  type        = string
+  default     = "ibm-centos-stream-10-amd64-4"
+}

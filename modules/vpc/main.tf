@@ -26,7 +26,7 @@ resource "ibm_is_vpc" "vpc" {
 
 resource "ibm_is_subnet" "subnets" {
   #   count                    = length(var.locations)
-  depends_on = [ ibm_is_vpc_address_prefix.vpc_address_prefixes ]
+  depends_on      = [ibm_is_vpc_address_prefix.vpc_address_prefixes]
   for_each        = { for s in var.subnet : s.name => s }
   name            = each.value["name"]
   resource_group  = var.resource_group_id

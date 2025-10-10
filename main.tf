@@ -1,6 +1,6 @@
 provider "ibm" {
   ibmcloud_api_key = var.ibmcloud_api_key
-  region           = "br-sao" #var.region
+  region           = var.region
 }
 
 module "resource-group" {
@@ -9,21 +9,8 @@ module "resource-group" {
   existing_resource_group_name = var.resource_group
 }
 
-## módulo de cos para flow logs
 
-# resource "random_id" "random_id" {
-#   byte_length = 6
-# }
-
-# module "cos" {
-#   source  = "terraform-ibm-modules/cos/ibm"
-#   version = "10.4.0"
-#   resource_group_id = module.resource-group.resource_group_id
-#   cos_instance_name = var.cos_instance_name
-#   bucket_name = "${var.cos_bucket_name}-${random_id.random_id.hex}"
-#   region = var.region
-#   kms_encryption_enabled = false
-# }
+# # módulo para criar VPC
 
 module "vpc" {
   source                      = "./modules/vpc"
@@ -40,5 +27,40 @@ module "vpc" {
   subnet                      = var.subnet
 }
 
+# # módulo de flow logs
 
-# módulo de ssh para criação da VSI
+module "flow_logs" {
+  source            = "./modules/flow_logs"
+  depends_on        = [module.vpc]
+  cos_bucket_name   = var.cos_bucket_name
+  cos_instance_name = var.cos_instance_name
+  flow_logs_name    = var.flow_logs_name
+  flow_logs_active  = var.flow_logs_active
+  target            = module.vpc.vpc_id
+  resource_group_id = module.resource-group.resource_group_id
+}
+
+# # módulo de ssh para criação da VSI
+
+module "ssh_key" {
+  source   = "./modules/ssh_key"
+  ssh_keys = var.ssh_keys
+  prefix   = var.vpc_name
+  resource_group_id = module.resource-group.resource_group_id
+}
+
+# # módulo da VSI
+
+module "vsi" {
+  depends_on = [ module.ssh_key, module.vpc ]
+  source = "./modules/vsi"
+  vni_name = var.vni_name
+  vni_subnet = module.vpc.subnet_ids[0]
+  vsi_name = var.vsi_name
+  vsi_profile = var.vsi_profile
+  vsi_vpc_id = module.vpc.vpc_id
+  resource_group_id = module.resource-group.resource_group_id
+  ssh_keys = [ module.ssh_key.ssh_key_id ]
+  image_name = var.vsi_image_name
+  tags = var.tags
+}
