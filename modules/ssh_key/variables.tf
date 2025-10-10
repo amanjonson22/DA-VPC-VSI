@@ -12,10 +12,10 @@ variable "prefix" {
   }
 }
 
-variable "resource_group_id" {
-  description = "The resource group where the VPC to be created"
-  type        = string
-}
+# variable "resource_group_id" {
+#   description = "The resource group where the VPC to be created"
+#   type        = string
+# }
 
 
 variable "tags" {
@@ -24,13 +24,19 @@ variable "tags" {
   default     = []
 }
 
-variable "ssh_keys" {
+variable "ssh_key" {
   description = "SSH keys to use to provision a VSI. If `public_key` is not provided, the named key will be looked up from data. See https://cloud.ibm.com/docs/vpc?topic=vpc-ssh-keys."
   type = object({
       name              = string
       public_key        = optional(string)
       resource_group_id = optional(string)
     })
+}
+
+variable "create_ssh_key" {
+  description = "Set as true to create a new ssh key with the provided public key, or set as false to use an existing ssh key"
+  type = bool
+  default = true
 }
 
 ##############################################################################

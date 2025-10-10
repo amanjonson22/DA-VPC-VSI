@@ -1,4 +1,4 @@
-### COS Outputs
+## COS Outputs
 
 output "s3_endpoint_private" {
   description = "S3 private endpoint"
@@ -57,7 +57,7 @@ output "cos_instance_crn" {
   value       = module.cos.cos_instance_crn
 }
 
-#### Flow Logs Outputs
+### Flow Logs Outputs
 
 output "flow_logs_name" {
   description = "The name of the Flow Logs instance"

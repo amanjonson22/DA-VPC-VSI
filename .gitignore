@@ -4,3 +4,4 @@ terraform.tfstate.backup
 terraform.tfvars
 teste
 terraform.tfstate
+terraform-provider.txt

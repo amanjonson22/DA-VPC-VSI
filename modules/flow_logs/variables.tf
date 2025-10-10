@@ -23,6 +23,14 @@ variable "cos_bucket_name" {
   type        = string
 }
 
+#### Variável Policy ####
+
+variable "create_policy" {
+  description = "Defines if the policy is to be created on the IBM Cloud environment or not"
+  type = bool
+  default = true
+}
+
 #### Variáveis Flow Logs ####
 
 variable "flow_logs_name" {
