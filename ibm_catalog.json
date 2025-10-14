@@ -18,6 +18,7 @@
             "flavors": [ {
                 "label": "QuickStart",
                 "name": "quickstart",
+                "description": "Provisiona uma VPC com uma VSI, tendo Flow Logs para coleta dos logs.",
                 "configuration" : [
                     {
                         "key": "region",
@@ -25,8 +26,16 @@
                         "default_value" : "br-sao",
                         "description": "A região onde as instâncias serão provisionadas",
                         "required": true,
-                        "options": ["br-sao"],
-                        "hidden": false
+                        "options": [{
+                            "displayname" : "br-sao",
+                            "value" : "br-sao" 
+                        }]
+                    },
+                    {
+                        "key": "ibmcloud_api_key",
+                        "type": "password",
+                        "description": "A chave API para provisionamento da VPC e VSI",
+                        "required": true
                     },
                     {
                         "key": "zone",
@@ -34,28 +43,205 @@
                         "default_value" : "br-sao-1",
                         "description": "A região onde as subnets e address prefix serão provisionadas",
                         "required": true,
-                        "options": ["br-sao-1", "br-sao-2", "br-sao-3"],
-                        "hidden": false
+                        "options": [{
+                            "displayname" : "br-sao-1",
+                            "value" : "br-sao-1" 
+                        }, 
+                        {
+                            "displayname" : "br-sao-2",
+                            "value" : "br-sao-2" 
+                        },
+                        {
+                            "displayname" : "br-sao-3",
+                            "value" : "br-sao-3" 
+                        }]
                     },
                     {
-                        "key": "address-prefix-value",
+                        "key": "resource_group",
                         "type": "string",
-                        "default_value" : "10.250.0.0/18",
+                        "default_value" : "Default",
+                        "description": "Resource Group onde as instâncias serão provisionadas",
+                        "required": true,
+                        "custom_config": {
+                            "type": "resource_group"
+                        }
+                    },
+                    {
+                        "key": "tags",
+                        "type": "list(string)",
+                        "default_value" : ["managed-by=iac"],
+                        "description": "Tags aplicadas para todos os resources criados",
+                        "required": false
+                    },
+                    {
+                        "key": "cos_instance_name",
+                        "type": "string",
+                        "description": "Nome da instância do Cloud Object Storage a ser criado para o Flow Logs",
+                        "required": true
+                    },
+                    {
+                        "key": "cos_bucket_name",
+                        "type": "string",
+                        "description": "Nome do bucket do Cloud Object Storage a ser criado para o Flow Logs",
+                        "required": true
+                    },
+                    {
+                        "key": "vpc_name",
+                        "type": "string",
+                        "description": "Nome da VPC",
+                        "required": true
+                    },
+                    {
+                        "key": "address_prefixes",
+                        "type": "object",
+                        "default_value" : {
+                            "name" : "address-1",
+                            "ip_range" : "10.250.0.0/18",
+                            "location" : "br-sao-1"
+                        },
                         "description": "O valor do address prefix da VPC. Deve ter um CIDR maior que o da subnet",
                         "required": true,
-                        "options": ["10.250.0.0/18", "10.250.64.0/18", "10.250.128.0/18"],
-                        "hidden": false
+                        "multiline" : true,
+                        "options": [{
+                            "displayname" :  "br-sao-1 - 10,250.0.0/18",
+                            "value" : {
+                                "name" : "address-1",
+                                "ip_range" : "10.250.0.0/18",
+                                "location" : "br-sao-1"
+                            }
+                        },
+                        {
+                            "displayname" :  "br-sao-2 - 10,250.64.0/18",
+                            "value" : {
+                                "name" : "address-2",
+                                "ip_range" : "10.250.64.0/18",
+                                "location" : "br-sao-2"
+                            }
+                        },
+                        {
+                            "displayname" :  "br-sao-3 - 10,250.128.0/18",
+                            "value" : {
+                                "name" : "address-3",
+                                "ip_range" : "10.250.128.0/18",
+                                "location" : "br-sao-3"
+                            }
+                        }]
                     },
                     {
                         "key": "subnet-value",
-                        "type": "string",
-                        "default_value" : "10.250.0.0/24",
+                        "type": "object",
+                        "default_value" : {
+                            "name" : "address-1",
+                            "ip_range" : "10.250.0.0/18",
+                            "location" : "br-sao-1"
+                        },
                         "description": "O valor da subnet da VPC.",
                         "required": true,
-                        "options": ["10.250.0.0/24", "10.250.64.0/24", "10.250.128.0/24"],
-                        "hidden": false
+                        "multiline" : true,
+                        "options": [{
+                            "displayname" :  "br-sao-1 - 10,250.0.0/24",
+                            "value" : {
+                                "name" : "subnet-1",
+                                "ipv4_cidr_block" : "10.250.0.0/24",
+                                "location" : "br-sao-1"
+                            }
+                        },
+                        {
+                            "displayname" :  "br-sao-2 - 10,250.64.0/24",
+                            "value" : {
+                                "name" : "subnet-2",
+                                "ipv4_cidr_block" : "10.250.64.0/24",
+                                "location" : "br-sao-2"
+                            }
+                        },
+                        {
+                            "displayname" :  "br-sao-3 - 10,250.128.0/24",
+                            "value" : {
+                                "name" : "subnet-3",
+                                "ipv4_cidr_block" : "10.250.128.0/24",
+                                "location" : "br-sao-3"
+                            }
+                        }]
+                    },
+                    {
+                        "key": "flow_logs_name",
+                        "type": "string",
+                        "description": "Nome do Flow Logs",
+                        "required": true
+                    },
+                    {
+                        "key": "flow_logs_active",
+                        "type": "boolean",
+                        "description": "Se Flow Logs estará ativo após sua criação",
+                        "required": true,
+                        "options": [
+                            {
+                            "displayname": "true",
+                            "value": "true"
+                            },
+                            {
+                            "displayname": "false",
+                            "value": "false"
+                            }]
+                    },
+                    {
+                        "key": "create_policy",
+                        "type": "boolean",
+                        "description": "Se irá criar a policy que permite que o Flow Logs se comunique com o bucket. Caso essa policy já exista, o valor deve ser obrigatoriamente false.",
+                        "default_value" : "false",
+                        "required": true,
+                        "options": [
+                            {
+                            "displayname": "true",
+                            "value": "true"
+                            },
+                            {
+                            "displayname": "false",
+                            "value": "false"
+                            }]
+                    },
+                    {
+                        "key": "ssh_keys",
+                        "type": "object",
+                        "description": "Chave SSH usada para provisionar a VSI.",
+                        "required": true,
+                        "multiline" : true
+                    },
+                    {
+                        "key": "create_ssh_key",
+                        "type": "boolean",
+                        "description": "Se irá criar uma chave ssh com a chave pública fornecida",
+                        "required": true,
+                        "options": [
+                            {
+                            "displayname": "true",
+                            "value": "true"
+                            },
+                            {
+                            "displayname": "false",
+                            "value": "false"
+                            }]
+                    },
+                    {
+                        "key": "vni_name",
+                        "type": "string",
+                        "description": "Nome da Virtual Network Interface",
+                        "required": true
+                    },
+                    {
+                        "key": "vsi_name",
+                        "type": "string",
+                        "description": "Nome da VSI",
+                        "required": true,
+                        "default_value": "bx2-2x8"
+                    },
+                    {
+                        "key": "vsi_image_name",
+                        "type": "string",
+                        "description": "Nome da imagem para ser utilizada na VSI",
+                        "required": true,
+                        "default_value": "ibm-centos-stream-10-amd64-4"
                     }
-
                 ]
             } ]
         }

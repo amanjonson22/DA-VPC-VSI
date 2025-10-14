@@ -68,8 +68,8 @@ variable "subnet" {
   description = "Subnet configurations for the subnet, involving the location of the subnet and CIDR block"
   type = list(object({
     name            = string
-    location        = string
     ipv4_cidr_block = string
+    location        = string
   }))
   default = [{
     name            = "subnet-1"
