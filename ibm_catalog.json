@@ -103,7 +103,7 @@
                         "multiline" : true
                     },
                     {
-                        "key": "subnet-value",
+                        "key": "subnet",
                         "type": "array",
                         "default_value" : [{
                             "name" : "subnet-1",
