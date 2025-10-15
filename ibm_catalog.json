@@ -93,7 +93,7 @@
                     },
                     {
                         "key": "address_prefixes",
-                        "type": "array",
+                        "type": "list(object)",
                         "default_value" : {
                             "name" : "address-1",
                             "ip_range" : "10.250.0.0/18",
@@ -129,7 +129,7 @@
                     },
                     {
                         "key": "subnet-value",
-                        "type": "array",
+                        "type": "list(object)",
                         "default_value" : {
                             "name" : "address-1",
                             "ip_range" : "10.250.0.0/18",
