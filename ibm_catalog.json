@@ -93,7 +93,7 @@
                     },
                     {
                         "key": "address_prefixes",
-                        "type": "list(object)",
+                        "type": "array",
                         "default_value" : {
                             "name" : "address-1",
                             "ip_range" : "10.250.0.0/18",
@@ -101,67 +101,19 @@
                         },
                         "description": "O valor do address prefix da VPC. Deve ter um CIDR maior que o da subnet",
                         "required": true,
-                        "multiline" : true,
-                        "options": [{
-                            "displayname" :  "br-sao-1 - 10,250.0.0/18",
-                            "value" : {
-                                "name" : "address-1",
-                                "ip_range" : "10.250.0.0/18",
-                                "location" : "br-sao-1"
-                            }
-                        },
-                        {
-                            "displayname" :  "br-sao-2 - 10,250.64.0/18",
-                            "value" : {
-                                "name" : "address-2",
-                                "ip_range" : "10.250.64.0/18",
-                                "location" : "br-sao-2"
-                            }
-                        },
-                        {
-                            "displayname" :  "br-sao-3 - 10,250.128.0/18",
-                            "value" : {
-                                "name" : "address-3",
-                                "ip_range" : "10.250.128.0/18",
-                                "location" : "br-sao-3"
-                            }
-                        }]
+                        "multiline" : true
                     },
                     {
                         "key": "subnet-value",
-                        "type": "list(object)",
-                        "default_value" : {
+                        "type": "array",
+                        "default_value" : [{
                             "name" : "address-1",
                             "ip_range" : "10.250.0.0/18",
                             "location" : "br-sao-1"
-                        },
+                        }],
                         "description": "O valor da subnet da VPC.",
                         "required": true,
-                        "multiline" : true,
-                        "options": [{
-                            "displayname" :  "br-sao-1 - 10,250.0.0/24",
-                            "value" : {
-                                "name" : "subnet-1",
-                                "ipv4_cidr_block" : "10.250.0.0/24",
-                                "location" : "br-sao-1"
-                            }
-                        },
-                        {
-                            "displayname" :  "br-sao-2 - 10,250.64.0/24",
-                            "value" : {
-                                "name" : "subnet-2",
-                                "ipv4_cidr_block" : "10.250.64.0/24",
-                                "location" : "br-sao-2"
-                            }
-                        },
-                        {
-                            "displayname" :  "br-sao-3 - 10,250.128.0/24",
-                            "value" : {
-                                "name" : "subnet-3",
-                                "ipv4_cidr_block" : "10.250.128.0/24",
-                                "location" : "br-sao-3"
-                            }
-                        }]
+                        "multiline" : true
                     },
                     {
                         "key": "flow_logs_name",
