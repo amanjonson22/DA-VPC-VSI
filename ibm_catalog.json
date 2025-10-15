@@ -16,8 +16,8 @@
                 }
             ],
             "flavors": [ {
-                "label": "QuickStart",
-                "name": "quickstart",
+                "label": "Standard",
+                "name": "standard",
                 "description": "Provisiona uma VPC com uma VSI, tendo Flow Logs para coleta dos logs.",
                 "configuration" : [
                     {
@@ -93,7 +93,7 @@
                     },
                     {
                         "key": "address_prefixes",
-                        "type": "object",
+                        "type": "array",
                         "default_value" : {
                             "name" : "address-1",
                             "ip_range" : "10.250.0.0/18",
@@ -129,7 +129,7 @@
                     },
                     {
                         "key": "subnet-value",
-                        "type": "object",
+                        "type": "array",
                         "default_value" : {
                             "name" : "address-1",
                             "ip_range" : "10.250.0.0/18",
