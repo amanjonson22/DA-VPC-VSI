@@ -69,7 +69,7 @@
                     {
                         "key": "tags",
                         "type": "list(string)",
-                        "default_value" : ["managed-by=iac"],
+                        "default_value" : [],
                         "description": "Tags aplicadas para todos os resources criados",
                         "required": false
                     },
