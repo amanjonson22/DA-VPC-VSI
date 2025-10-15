@@ -3,6 +3,11 @@
 # Copyright 2020 IBM
 #####################################################
 
+data "ibm_resource_group" "rg" {
+  name = var.resource_group
+}
+
+
 data "ibm_is_vpc" "vpc_ds" {
   count = var.create_vpc ? 0 : 1
   name  = var.vpc
@@ -11,7 +16,7 @@ data "ibm_is_vpc" "vpc_ds" {
 resource "ibm_is_vpc" "vpc" {
   count                       = var.create_vpc ? 1 : 0
   name                        = var.vpc_name
-  resource_group              = var.resource_group_id
+  resource_group              = data.ibm_resource_group.rg.id
   address_prefix_management   = var.default_address_prefix
   default_network_acl_name    = var.default_network_acl_name
   default_security_group_name = var.default_security_group_name
@@ -29,7 +34,7 @@ resource "ibm_is_subnet" "subnets" {
   depends_on      = [ibm_is_vpc_address_prefix.vpc_address_prefixes]
   for_each        = { for s in var.subnet : s.name => s }
   name            = each.value["name"]
-  resource_group  = var.resource_group_id
+  resource_group  = data.ibm_resource_group.rg.id
   vpc             = var.create_vpc ? ibm_is_vpc.vpc[0].id : data.ibm_is_vpc.vpc_ds[0].id
   zone            = each.value["location"]
   ipv4_cidr_block = each.value["ipv4_cidr_block"]

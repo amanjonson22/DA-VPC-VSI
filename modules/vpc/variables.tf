@@ -9,6 +9,12 @@ variable "create_vpc" {
   default     = true
 }
 
+variable "resource_group" {
+  description = "The resource group where the VPC to be created"
+  type        = string
+  default     = "Default"
+}
+
 #####################################################
 # Optional Parameters
 #####################################################
@@ -18,13 +24,6 @@ variable "vpc_name" {
   type        = string
   default     = null
 }
-
-variable "resource_group_id" {
-  description = "ID of resource group."
-  type        = string
-  default     = null
-}
-
 
 variable "default_address_prefix" {
   description = "Default address prefix creation method"

@@ -107,10 +107,10 @@
                         "type": "array",
                         "default_value" : [{
                             "name" : "subnet-1",
-                            "ip_range" : "10.250.0.0/24",
+                            "ipv4_cidr_block" : "10.250.0.0/24",
                             "location" : "br-sao-1"
                         }],
-                        "description": "O valor da subnet da VPC. Insira o nome da subnet, o range de ip e localização no formato: name, ip_range, location.",
+                        "description": "O valor da subnet da VPC. Insira o nome da subnet, o range de ip e localização no formato: name, ipv4_cidr_block, location.",
                         "required": true,
                         "multiline" : true
                     },

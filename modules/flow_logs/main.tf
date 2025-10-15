@@ -2,10 +2,14 @@ resource "random_id" "random_id" {
   byte_length = 6
 }
 
+data "ibm_resource_group" "rg" {
+  name = var.resource_group
+}
+
 module "cos" {
   source                 = "terraform-ibm-modules/cos/ibm"
   version                = "10.4.0"
-  resource_group_id      = var.resource_group_id
+  resource_group_id      = data.ibm_resource_group.rg.id
   cos_instance_name      = var.cos_instance_name
   bucket_name            = "${var.cos_bucket_name}-${random_id.random_id.hex}"
   region                 = var.region
@@ -27,7 +31,7 @@ resource "ibm_is_flow_log" "flow_logs" {
   target         = var.target
   active         = var.flow_logs_active
   storage_bucket = module.cos.bucket_name
-  resource_group = var.resource_group_id
+  resource_group = data.ibm_resource_group.rg.id
 }
 
 locals {

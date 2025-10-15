@@ -3,16 +3,12 @@ provider "ibm" {
   region           = var.region
 }
 
-data "ibm_resource_group" "rg" {
-  name = var.resource_group
-}
-
 # # módulo para criar VPC
 
 module "vpc" {
   source                      = "./modules/vpc"
   vpc_name                    = var.vpc_name
-  resource_group_id           = data.ibm_resource_group.rg.id
+  resource_group = var.resource_group
   vpc_tags                    = var.tags
   default_address_prefix      = "manual"
   address_prefixes            = var.address_prefixes
@@ -34,7 +30,7 @@ module "flow_logs" {
   flow_logs_name    = var.flow_logs_name
   flow_logs_active  = var.flow_logs_active
   target            = module.vpc.vpc_id
-  resource_group_id = data.ibm_resource_group.rg.id
+  resource_group = var.resource_group
   create_policy     = var.create_policy
 }
 
@@ -44,7 +40,7 @@ module "ssh_key" {
   source            = "./modules/ssh_key"
   ssh_key           = var.ssh_keys
   prefix            = var.vpc_name
-  resource_group_id = data.ibm_resource_group.rg.id
+  resource_group = var.resource_group
   create_ssh_key    = var.create_ssh_key
 }
 

@@ -2,6 +2,12 @@
 # SSH Key Variables
 ##############################################################################
 
+variable "resource_group" {
+  description = "The resource group where the VPC to be created"
+  type        = string
+  default     = "Default"
+}
+
 variable "prefix" {
   description = "A unique identifier for resources that is prepended to resources that are provisioned. Must begin with a lowercase letter and end with a lowercase letter or number. Must be 16 or fewer characters."
   type        = string
@@ -11,12 +17,6 @@ variable "prefix" {
     condition     = can(regex("^([A-z]|[a-z][-a-z0-9]*[a-z0-9])$", var.prefix))
   }
 }
-
-variable "resource_group_id" {
-  description = "The resource group where the VPC to be created"
-  type        = string
-}
-
 
 variable "tags" {
   description = "A list of resource tags to be added to resources"

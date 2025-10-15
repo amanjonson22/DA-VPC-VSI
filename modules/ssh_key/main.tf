@@ -1,8 +1,13 @@
+
+data "ibm_resource_group" "rg" {
+  name = var.resource_group
+}
+
 resource "ibm_is_ssh_key" "ssh_key" {
   count          = var.create_ssh_key ? 1 : 0
   name           = "${var.prefix}-${var.ssh_key.name}"
   public_key     = replace(var.ssh_key.public_key, "/==.*$/", "==")
-  resource_group = var.resource_group_id
+  resource_group = data.ibm_resource_group.rg.id
   tags           = var.tags
 }
 

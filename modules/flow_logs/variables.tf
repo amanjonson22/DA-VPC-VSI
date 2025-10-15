@@ -1,8 +1,9 @@
 #### Variáveis compartilhadas
 
-variable "resource_group_id" {
-  description = "The resource group ID where the Flow Logs and COS will be created"
+variable "resource_group" {
+  description = "The resource group where the VPC to be created"
   type        = string
+  default     = "Default"
 }
 
 #### Variáveis COS
