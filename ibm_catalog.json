@@ -94,11 +94,11 @@
                     {
                         "key": "address_prefixes",
                         "type": "array",
-                        "default_value" : {
+                        "default_value" : [{
                             "name" : "address-1",
                             "ip_range" : "10.250.0.0/18",
                             "location" : "br-sao-1"
-                        },
+                        }],
                         "description": "O valor do address prefix da VPC. Deve ter um CIDR maior que o da subnet",
                         "required": true,
                         "multiline" : true
