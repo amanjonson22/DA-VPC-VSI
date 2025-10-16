@@ -8,7 +8,7 @@ provider "ibm" {
 module "vpc" {
   source                      = "./modules/vpc"
   vpc_name                    = var.vpc_name
-  resource_group = var.resource_group
+  resource_group              = var.resource_group_id
   vpc_tags                    = var.tags
   default_address_prefix      = "manual"
   address_prefixes            = var.address_prefixes
@@ -30,32 +30,32 @@ module "flow_logs" {
   flow_logs_name    = var.flow_logs_name
   flow_logs_active  = var.flow_logs_active
   target            = module.vpc.vpc_id
-  resource_group = var.resource_group
+  resource_group    = var.resource_group_id
   create_policy     = var.create_policy
 }
 
 # # módulo de ssh para criação da VSI
 
 module "ssh_key" {
-  source            = "./modules/ssh_key"
-  ssh_key           = var.ssh_keys
-  prefix            = var.vpc_name
-  resource_group = var.resource_group
-  create_ssh_key    = var.create_ssh_key
+  source         = "./modules/ssh_key"
+  ssh_key        = var.ssh_keys
+  prefix         = var.vpc_name
+  resource_group = var.resource_group_id
+  create_ssh_key = var.create_ssh_key
 }
 
 # # módulo da VSI
 
 module "vsi" {
-  depends_on        = [module.ssh_key, module.vpc]
-  source            = "./modules/vsi"
-  vni_name          = var.vni_name
-  vni_subnet        = module.vpc.subnet_ids[0]
-  vsi_name          = var.vsi_name
-  vsi_profile       = var.vsi_profile
-  vsi_vpc_id        = module.vpc.vpc_id
-  resource_group = var.resource_group
-  ssh_keys          = [module.ssh_key.ssh_key_id]
-  image_name        = var.vsi_image_name
-  tags              = var.tags
+  depends_on     = [module.ssh_key, module.vpc]
+  source         = "./modules/vsi"
+  vni_name       = var.vni_name
+  vni_subnet     = module.vpc.subnet_ids[0]
+  vsi_name       = var.vsi_name
+  vsi_profile    = var.vsi_profile
+  vsi_vpc_id     = module.vpc.vpc_id
+  resource_group = var.resource_group_id
+  ssh_keys       = [module.ssh_key.ssh_key_id]
+  image_name     = var.vsi_image_name
+  tags           = var.tags
 }

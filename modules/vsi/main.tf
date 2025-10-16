@@ -1,11 +1,11 @@
-data "ibm_resource_group" "rg" {
-  name = var.resource_group
-}
+# data "ibm_resource_group" "rg" {
+#   name = var.resource_group
+# }
 
 resource "ibm_is_virtual_network_interface" "vni" {
   name           = var.vni_name
   subnet         = var.vni_subnet
-  resource_group = data.ibm_resource_group.rg.id
+  resource_group = var.resource_group_id
   tags           = var.tags
 }
 
@@ -16,7 +16,7 @@ data "ibm_is_image" "image" {
 
 resource "ibm_is_instance" "vsi" {
   name    = var.vsi_name
-  resource_group = data.ibm_resource_group.rg.id
+  resource_group = var.resource_group_id
   image   = data.ibm_is_image.image.id
   zone    = var.zone
   profile = var.vsi_profile

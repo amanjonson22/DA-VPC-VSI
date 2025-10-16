@@ -6,7 +6,13 @@ variable "ibmcloud_api_key" {
   sensitive   = true
 }
 
-variable "resource_group" {
+# variable "resource_group" {
+#   description = "The resource group where the VPC to be created"
+#   type        = string
+#   default     = "Default"
+# }
+
+variable "resource_group_id" {
   description = "The resource group where the VPC to be created"
   type        = string
   default     = "Default"
@@ -112,7 +118,7 @@ variable "ssh_keys" {
 variable "create_ssh_key" {
   description = "Set as true to create a new ssh key with the provided public key, or set as false to use an existing ssh key. The default is true."
   type        = bool
-  default     = true
+  default     = false
 }
 
 #### Variáveis da VSI ######

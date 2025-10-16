@@ -2,10 +2,9 @@
 # SSH Key Variables
 ##############################################################################
 
-variable "resource_group" {
+variable "resource_group_id" {
   description = "The resource group where the VPC to be created"
   type        = string
-  default     = "Default"
 }
 
 variable "prefix" {
