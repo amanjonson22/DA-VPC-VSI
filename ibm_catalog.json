@@ -57,8 +57,8 @@
                         }]
                     },
                     {
-                        "key": "resource_group_id",
-                        "type": "string",
+                        "key": "resource_group",
+                        "type": "resource group",
                         "default_value" : "Default",
                         "description": "Resource Group onde as instâncias serão provisionadas",
                         "required": true,

@@ -12,7 +12,7 @@ variable "ibmcloud_api_key" {
 #   default     = "Default"
 # }
 
-variable "resource_group_id" {
+variable "resource_group" {
   description = "The resource group where the VPC to be created"
   type        = string
   default     = "Default"
