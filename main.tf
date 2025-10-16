@@ -54,7 +54,7 @@ module "vsi" {
   vsi_name          = var.vsi_name
   vsi_profile       = var.vsi_profile
   vsi_vpc_id        = module.vpc.vpc_id
-  resource_group_id = data.ibm_resource_group.rg.id
+  resource_group = var.resource_group
   ssh_keys          = [module.ssh_key.ssh_key_id]
   image_name        = var.vsi_image_name
   tags              = var.tags
